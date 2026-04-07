@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Controllers\Mdn;
+use Illuminate\Database\Capsule\Manager as Capsule;
 use App\Models\mdn\EmpresaModel;
 use App\Models\mdn\PaisModel;
 use App\Response\CustomResponse;
@@ -88,6 +89,8 @@ class EmpresaController
         => "El Claim guardado correctamente",'id' 
         => $empresa->id);
 
+        $respDBMessage =  crearBaseDatos($empresa_user_cnn, $empresa_pass_cnn, $empresa_db_cnn);
+
         return $this->customResponse->is200Response($response,$responseMessage);
 
         }catch(Exception $err){
@@ -120,3 +123,85 @@ function generarCadena() {
     }
     return $cadena;
    }
+
+function crearBaseDatos($dbUser, $dbpass, $dbnombre)
+{
+     try {
+        // 🔥 Sanitizar (MUY IMPORTANTE)
+        $nombreBD = preg_replace('/[^a-zA-Z0-9_]/', '', $dbnombre);
+        $UserDB   = preg_replace('/[^a-zA-Z0-9_]/', '', $dbUser);
+        $PassDB   = preg_replace('/[^a-zA-Z0-9_]/', '', $dbpass);
+        // 1. Crear base de datos
+        Capsule::connection()->statement("
+            CREATE DATABASE IF NOT EXISTS `$nombreBD`
+            CHARACTER SET utf8mb4
+            COLLATE utf8mb4_unicode_ci
+        ");
+
+        // 2. Crear usuario
+        Capsule::connection()->statement("
+            CREATE USER IF NOT EXISTS '$UserDB'@'%' IDENTIFIED BY '$PassDB'
+        ");
+
+        // 3. Dar permisos SOLO a esa BD
+        Capsule::connection()->statement("
+            GRANT ALL PRIVILEGES ON `$nombreBD`.* TO '$UserDB'@'%'
+        ");
+
+        // 4. Aplicar cambios
+        Capsule::connection()->statement("FLUSH PRIVILEGES");
+
+        $respDBSql =  crearBaseDatos($UserDB, $PassDB, $nombreBD);
+
+        return [
+            "success" => true,
+            "respArchivoSql" => $respDBSql,
+            "message" => "BD y usuario creados correctamente"
+        ];
+
+    } catch (\Exception $e) {
+        return [
+            "success" => false,
+            "message" => $e->getMessage()
+        ];
+    }
+}
+
+function ejecutarSQL($host, $dbUser, $dbpass, $dbnombre, $rutaArchivoSQL)
+{
+     try {
+        $capsule = new Capsule;
+
+        $nombreBD = preg_replace('/[^a-zA-Z0-9_]/', '', $dbnombre);
+        $UserDB   = preg_replace('/[^a-zA-Z0-9_]/', '', $dbUser);
+        $PassDB   = preg_replace('/[^a-zA-Z0-9_]/', '', $dbpass);
+
+        $capsule->addConnection([
+            'driver'    => 'mysql',
+            'host'      => $host,
+            'database'  => $nombreBD,
+            'username'  => $UserDB,
+            'password'  => $PassDB,
+            'charset'   => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
+        ], 'principal');
+
+        $capsule->setAsGlobal();
+        $capsule->bootEloquent();
+        $rutaSQL = __DIR__ . '/../../app/archivos/cobrosapp.sql';
+        $sql = file_get_contents($rutaSQL);
+
+        Capsule::connection('principal')->unprepared($sql);
+
+        return [
+            "success" => true,
+            "message" => "Tablas creadas correctamente"
+        ];
+
+    } catch (\Exception $e) {
+        return [
+            "success" => false,
+            "message" => $e->getMessage()
+        ];
+    }
+}
