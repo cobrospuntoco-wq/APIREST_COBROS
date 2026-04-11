@@ -10,7 +10,8 @@
         "illuminate/database": "^7.11",
         "selective/basepath": "^2.1",
         "tuupola/cors-middleware": "1.0",
-        "sendgrid/sendgrid": "^7.0"
+        "sendgrid/sendgrid": "^7.0",
+        "phpmailer/phpmailer": "^6.5"
     },
 
     "autoload": {
@@ -19,6 +20,9 @@
         }
     },
     "config": {
-        "platform-check": false
+        "platform-check": false,
+    "platform": {
+      "php": "7.4"
     }
+  }
 }

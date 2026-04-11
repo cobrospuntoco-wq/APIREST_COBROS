@@ -209,14 +209,14 @@ class UserClaimController
 
                 // 📧 enviar correo con SendGrid
                 $mailService = new MailService();
-                $status = $mailService->enviarCodigo2FA($usuarioFactor->email, $codigoFactor);
+                $status = $mailService->send($usuarioFactor->email, $usuarioFactor->nombre, $codigoFactor);
 
-              /*   if ($status != 202) {
+                if ($status != 202) {
                     return $this->customResponse->is400Response($response, [
                         "error" => "Error enviando correo",
                         "detalle" => $status
                     ]);
-                } */
+                } 
 
                 // ✅ respuesta
                 return $this->customResponse->is200Response($response, [
