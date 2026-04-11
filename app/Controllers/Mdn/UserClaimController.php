@@ -4,7 +4,7 @@ namespace App\Controllers\Mdn;
 use App\Models\mdn\UsuarioClaimModel;
 use App\Models\mdn\EmpresaModel;
 use App\Services\MailService;
-use App\Helpers\DataTimezona;
+use App\Helpers\DataTimeZona;
 use App\Response\CustomResponse;
 use App\Validation\Validator;
 use Respect\Validation\Exceptions\Exception;
@@ -189,7 +189,7 @@ class UserClaimController
             // $Pais_id = PaisGetId($data['Claim_pais_id']);
             // ⏳ expiración
           //   $zonaHoraria = !empty($PaisFactor->timezone) ? $PaisFactor->timezone : 'UTC';
-             $fechaExpira = DataTimezona::generarFechaExpira($data['Claim_pais_id']);
+             $fechaExpira = DataTimeZona::generarFechaExpira($data['Claim_pais_id']);
 
             // 🔐 generar código
             $codigoFactor = generarCodigo2FA();
