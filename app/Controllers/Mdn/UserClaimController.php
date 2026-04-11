@@ -221,7 +221,8 @@ class UserClaimController
                 // ✅ respuesta
                 return $this->customResponse->is200Response($response, [
                     "msg" => "Código de doble factor enviado correctamente",
-                    "usuario_id" => $usuarioFactor->id
+                    "usuario_id" => $usuarioFactor->id,
+                    "detalle envio correo" => $status
                 ]);
 
             } catch (\Exception $err) {
