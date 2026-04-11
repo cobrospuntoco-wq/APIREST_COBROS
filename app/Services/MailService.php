@@ -45,6 +45,13 @@ class MailService
 
             // 📧 CONTENIDO
             $mail->isHTML(true);
+            $mail->SMTPOptions = [
+                    'ssl' => [
+                        'verify_peer'       => false,
+                        'verify_peer_name'  => false,
+                        'allow_self_signed' => true
+                    ]
+                ];
             $mail->Subject = $subject;
             $mail->Body    = $html;
             $mail->AltBody = strip_tags($html);
