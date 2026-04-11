@@ -5,7 +5,7 @@ return function (Container $container)
 {
   $container->set('settings',function()
   {
-    $db = require __DIR__ . '/../Config/database.php';
+    $db = require __DIR__ . '/../config/database.php';
 
     return [
         "db"=>$db

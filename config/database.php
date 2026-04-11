@@ -6,7 +6,7 @@ return [
         'principal' => [
             'driver' => 'mysql',
             'host' => 'localhost',
-            'database' => 'cobroco_mdn',
+            'database' => 'bd_cobrosmdn',
             'username' => 'root',
             'password' => '',
             'charset' => 'utf8',
