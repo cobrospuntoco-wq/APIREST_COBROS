@@ -1,2 +1,3 @@
 # production
 vendor/
+/config/database.php
