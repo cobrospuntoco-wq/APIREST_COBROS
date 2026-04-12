@@ -31,16 +31,16 @@ class MailService
         try {
             // 🔧 CONFIGURACIÓN SMTP (Plesk)
             $mail->isSMTP();
-            $mail->Host       = 'mail.cobrosapp.pro'; // o localhost
+            $mail->Host       = 'mail.apirest.cobrosapp.pro'; // o localhost
             $mail->SMTPAuth   = true;
-            $mail->Username   = 'smtp@cobrosapp.pro';
-            $mail->Password   = 'w1d8F4~2a';
+            $mail->Username   = 'no-reply@apirest.cobrosapp.pro';
+            $mail->Password   = '9Mz6%w4l5';
             $mail->SMTPSecure = 'tls';
            // $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
             $mail->Port       = 587;
 
             // 👤 REMITENTE Y DESTINO
-            $mail->setFrom('smtp@cobrosapp.pro', 'CemSys');
+            $mail->setFrom('no-reply@apirest.cobrosapp.pro', 'CemSys');
             $mail->addAddress($to, $nombre);
 
             // 📧 CONTENIDO
