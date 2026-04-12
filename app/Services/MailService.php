@@ -35,9 +35,9 @@ class MailService
             $mail->SMTPAuth   = true;
             $mail->Username   = 'smtp@cobrosapp.pro';
             $mail->Password   = 'w1d8F4~2a';
-            //$mail->SMTPSecure = 'tls';
-            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-            $mail->Port       = 587;
+            $mail->SMTPSecure = 'tls';
+           // $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+            $mail->Port       = 465;
 
             // 👤 REMITENTE Y DESTINO
             $mail->setFrom('smtp@cobrosapp.pro', 'CemSys');
