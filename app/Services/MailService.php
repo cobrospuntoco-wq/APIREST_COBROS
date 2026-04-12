@@ -33,14 +33,14 @@ class MailService
             $mail->isSMTP();
             $mail->Host       = 'mail.apirest.cobrosapp.pro'; // o localhost
             $mail->SMTPAuth   = true;
-            $mail->Username   = 'no-reply@apirest.cobrosapp.pro';
-            $mail->Password   = '9Mz6%w4l5';
+            $mail->Username   = 'noreply@apirest.cobrosapp.pro';
+            $mail->Password   = 'g#4n445Bb';
             $mail->SMTPSecure = 'tls';
            // $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
             $mail->Port       = 587;
 
             // 👤 REMITENTE Y DESTINO
-            $mail->setFrom('no-reply@apirest.cobrosapp.pro', 'CemSys');
+            $mail->setFrom('noreply@apirest.cobrosapp.pro', 'CemSys');
             $mail->addAddress($to, $nombre);
 
             // 📧 CONTENIDO
